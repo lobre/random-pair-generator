@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  app:
+    image: jazzdd/alpine-flask:python3
+    command: -d
+    container_name: random-pair-generator-app
+    ports:
+      - 8000:80
+    volumes:
+      - .:/app
+
+  db:
+    image: mongo
+    container_name: random-pair-generator-db

@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h1>Edit</h1>
+  <p>Je suis l'édition</p>
+  <ul>
+    {% if items.count() > 0 %}
+      {% for item in items %}
+        <li>{{ item.name }} (<a href="{{ url_for('remove', id=item.get('_id')) }}">delete</a>)</li>
+      {% endfor %}
+    {% else %}
+      <p>No items</p>
+    {% endif %}
+  </ul>
+
+  <form method="post">
+    <div class="form-group">
+      <label for="item-name">Name</label>
+      <input type="text" class="form-control" id="item-name" name="item" placeholder="Enter name">
+    </div>
+    <button type="submit" class="btn btn-primary">Add</button>
+  </form>
+{% endblock %}
