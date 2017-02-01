@@ -1,21 +1,30 @@
 {% extends "layout.html" %}
 {% block body %}
   <h1>Edit</h1>
-  <p>Je suis l'édition</p>
+  <h2>List of items</h2>
   <ul>
     {% if items.count() > 0 %}
       {% for item in items %}
-        <li>{{ item.name }} (<a href="{{ url_for('remove', id=item.get('_id')) }}">delete</a>)</li>
+      <li>{{ item.name }} 
+        {% if item.photo %}
+          <img src="{{ item.photo | upload_dir }}" alt="{{ item.name }}" height="50" width="50">
+        {% endif %}
+        (<a href="{{ url_for('remove', id=item.get('_id')) }}">delete</a>)</li>
       {% endfor %}
     {% else %}
       <p>No items</p>
     {% endif %}
   </ul>
 
-  <form method="post">
+  <h2>Add new item</h2>
+  <form method="post" enctype="multipart/form-data">
     <div class="form-group">
-      <label for="item-name">Name</label>
-      <input type="text" class="form-control" id="item-name" name="item" placeholder="Enter name">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" name="name" placeholder="Enter name">
+    </div>
+    <div class="form-group">
+      <label for="photo">Photo</label>
+      <input type="file" name="photo" id="photo">
     </div>
     <button type="submit" class="btn btn-primary">Add</button>
   </form>
