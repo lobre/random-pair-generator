@@ -1,3 +1,4 @@
 pymongo
 flask-debugtoolbar
+Pillow
 images2gif

@@ -1,5 +1,10 @@
 {% extends "layout.html" %}
 {% block body %}
   <h1>Index</h1>
-  <p>Je suis l'index</p>
+
+  {% if has_pairs %}
+    <p>{{ config.get('message-after') }}</p>
+  {% else %}
+    <p>{{ config.get('message-before') }}</p>
+  {% endif %}
 {% endblock %}
