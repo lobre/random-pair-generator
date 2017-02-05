@@ -5,13 +5,50 @@
   {% if has_pairs %}
     <p>{{ config.get('message-after') }}</p>
 
+    <ul>
+      {% if pairs|length > 0 %}
+        {% for pair in pairs %}
+          <li>
+            {% if not pair.first %}
+              {% if pair.second.photo %}
+                <img src="{{ pair.second.photo | upload_dir }}" alt="{{ pair.second.name }}">
+              {% endif %}
+              {{ pair.second.name }} {{ 'is alone' | translate }}
+            {% elif not pair.second %}
+              {% if pair.first.photo %}
+                <img src="{{ pair.first.photo | upload_dir }}" alt="{{ pair.first.name }}">
+              {% endif %}
+              {{ pair.first.name }} {{ 'is alone' | translate }}
+            {% else %}
+              {% if pair.first.photo %}
+                <img src="{{ pair.first.photo | upload_dir }}" alt="{{ pair.first.name }}">
+              {% endif %}
+              {% if pair.second.photo %}
+                <img src="{{ pair.second.photo | upload_dir }}" alt="{{ pair.second.name }}">
+              {% endif %}
+              {{ pair.first.name }} {{ 'is with' | translate }} {{ pair.second.name }} 
+            {% endif %}
+          </li>
+        {% endfor %}
+      {% else %}
+        <p>{{ 'No item' | translate }}</p>
+      {% endif %}
+    </ul>
+
     <div id="overlay">
       <h3>{{ 'Pairs are generating...' | translate }}</h3>
+      <span id="countdown">10</span>
       <img src="{{ 'loading.gif' | upload_dir }}" alt="loading">
       <img src="{{ url_for('static', filename='dice.gif') }}" alt="dice">
     </div>
 
     <script>
+      setInterval(function() {
+        var countValue = parseInt($('#countdown').text());
+        if (countValue != 0) {
+          $('#countdown').text(countValue - 1);
+        }
+      }, 1000);
       setTimeout(function() {
         $('#overlay').fadeOut('fast');
       }, 10000);
@@ -24,7 +61,7 @@
         {% for item in items %}
         <li>{{ item.name }} 
           {% if item.photo %}
-            <img src="{{ item.photo | upload_dir }}" alt="{{ item.name }}" height="50" width="50">
+            <img src="{{ item.photo | upload_dir }}" alt="{{ item.name }}">
           {% endif %}
         {% endfor %}
       {% else %}

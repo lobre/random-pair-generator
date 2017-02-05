@@ -16,6 +16,9 @@ def add_item(name, photo):
 def get_items():
     return get_db().items.find()
 
+def get_item(id):
+    return get_db().items.find_one({"_id": ObjectId(id)})
+
 def remove_item(id):
     get_db().items.delete_one({"_id": ObjectId(id)})
 

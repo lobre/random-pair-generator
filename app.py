@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 import os
+import random
 import logging
 import config
 import translate
@@ -12,11 +13,20 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 @app.route("/")
 def index():
+    pairs = []
+    pairs_db = db.get_pairs()
+    for pair in pairs_db:
+        pairs.append({
+            'first': db.get_item(pair.get('first')),
+            'second': db.get_item(pair.get('second'))
+        })
+
     return render_template(
         'index.html',
         has_pairs=db.has_pairs(),
         config=db.get_config(),
-        items=db.get_items()
+        items=db.get_items(),
+        pairs=pairs
     )
 
 @app.route("/edit", methods=['POST', 'GET'])
@@ -53,7 +63,29 @@ def run():
 @app.route('/generate')
 @auth.requires_auth
 def generate():
-    db.add_pair({'test': True})
+    db.reset_pairs()
+
+    # Generate list of id
+    items = []
+    for item in db.get_items():
+        items.append(str(item.get('_id')))
+
+    # Fill in with None if list not odd
+    if len(items) % 2 != 0:
+        items.append(None)
+
+    # Shuffle
+    random.shuffle(items)
+
+    # Generate pairs
+    it = iter(items)
+    pairs = list(zip(it, it))
+
+    # Add pairs
+    for pair in pairs:
+        db.add_pair({'first': pair[0], 'second': pair[1]})
+
+    # Generate gif
     gif.generate()
     return redirect(url_for('run'))
 
