@@ -8,6 +8,7 @@ APP_USER = "admin"
 APP_PASS = "secret"
 
 GIF_FILE = "loading.gif"
+CSV_FILE = "translate.csv"
 
 def upload_dir(filename):
     return os.path.join('static', 'upload', filename)

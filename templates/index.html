@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 {% block body %}
-  <h1>Index</h1>
+  <h1>{{ 'Index' | translate }}</h1>
 
   {% if has_pairs %}
     <p>{{ config.get('message-after') }}</p>
 
     <div id="overlay">
-      <h3>Pairs are generating...</h3>
+      <h3>{{ 'Pairs are generating...' | translate }}</h3>
       <img src="{{ 'loading.gif' | upload_dir }}" alt="loading">
       <img src="{{ url_for('static', filename='dice.gif') }}" alt="dice">
     </div>
@@ -18,5 +18,18 @@
     </script>
   {% else %}
     <p>{{ config.get('message-before') }}</p>
+
+    <ul>
+      {% if items.count() > 0 %}
+        {% for item in items %}
+        <li>{{ item.name }} 
+          {% if item.photo %}
+            <img src="{{ item.photo | upload_dir }}" alt="{{ item.name }}" height="50" width="50">
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        <p>{{ 'No item' | translate }}</p>
+      {% endif %}
+    </ul>
   {% endif %}
 {% endblock %}

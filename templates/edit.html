@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
-  <h1>Edit</h1>
-  <h2>List of items</h2>
+  <h1>{{ 'Edit' | translate }}</h1>
+  <h2>{{ 'List of items' | translate }}</h2>
   <ul>
     {% if items.count() > 0 %}
       {% for item in items %}
@@ -9,23 +9,23 @@
         {% if item.photo %}
           <img src="{{ item.photo | upload_dir }}" alt="{{ item.name }}" height="50" width="50">
         {% endif %}
-        (<a href="{{ url_for('remove', id=item.get('_id')) }}">delete</a>)</li>
+        (<a href="{{ url_for('remove', id=item.get('_id')) }}">{{ 'delete' | translate }}</a>)</li>
       {% endfor %}
     {% else %}
-      <p>No items</p>
+      <p>{{ 'No item' | translate }}</p>
     {% endif %}
   </ul>
 
-  <h2>Add new item</h2>
+  <h2>{{ 'Add new item' | translate }}</h2>
   <form method="post" enctype="multipart/form-data">
     <div class="form-group">
-      <label for="name">Name</label>
-      <input type="text" class="form-control" id="name" name="name" placeholder="Enter name">
+      <label for="name">{{ 'Name' | translate }}</label>
+      <input type="text" class="form-control" id="name" name="name" placeholder="{{ 'Enter name' | translate }}">
     </div>
     <div class="form-group">
-      <label for="photo">Photo</label>
+      <label for="photo">{{ 'Photo' | translate }}</label>
       <input type="file" name="photo" id="photo">
     </div>
-    <button type="submit" class="btn btn-primary">Add</button>
+    <button type="submit" class="btn btn-primary">{{ 'Add' | translate }}</button>
   </form>
 {% endblock %}

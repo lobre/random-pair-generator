@@ -1,23 +1,23 @@
 {% extends "layout.html" %}
 {% block body %}
-  <h1>Run</h1>
-  <h2>Configuration</h2>
+  <h1>{{ 'Run' | translate }}</h1>
+  <h2>{{ 'Configuration' | translate }}</h2>
 
   <form method="post">
     <div class="form-group">
-      <label for="message-before">Message before</label>
+      <label for="message-before">{{ 'Message before' | translate }}</label>
       <textarea class="form-control" rows="3" name="message-before" id="message-before">{{ config.get('message-before') }}</textarea>
     </div>
     <div class="form-group">
-      <label for="message-after">Message after</label>
+      <label for="message-after">{{ 'Message after' | translate }}</label>
       <textarea class="form-control" rows="3" name="message-after" id="message-after">{{ config.get('message-after') }}</textarea>
     </div>
-    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="submit" class="btn btn-primary">{{ 'Save' | translate }}</button>
   </form>
 
   {% if has_pairs %}
-    <a href="{{ url_for('reset') }}" class="btn btn-primary">Reset</a>
+    <a href="{{ url_for('reset') }}" class="btn btn-primary">{{ 'Reset' | translate }}</a>
   {% else %}
-    <a href="{{ url_for('generate') }}" class="btn btn-primary">Generate</a>
+    <a href="{{ url_for('generate') }}" class="btn btn-primary">{{ 'Generate' | translate }}</a>
   {% endif %}
 {% endblock %}

@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 import os
 import logging
 import config
+import translate
 import db
 import auth
 import gif
@@ -11,7 +12,12 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 @app.route("/")
 def index():
-    return render_template('index.html', has_pairs=db.has_pairs(), config=db.get_config())
+    return render_template(
+        'index.html',
+        has_pairs=db.has_pairs(),
+        config=db.get_config(),
+        items=db.get_items()
+    )
 
 @app.route("/edit", methods=['POST', 'GET'])
 @auth.requires_auth
@@ -28,8 +34,7 @@ def edit():
         # Add item
         db.add_item(request.form['name'], filename)
 
-    items = db.get_items()
-    return render_template('edit.html', items=items)
+    return render_template('edit.html', items=db.get_items())
 
 @app.route('/remove/<id>')
 @auth.requires_auth
@@ -62,6 +67,10 @@ def reset():
 @app.template_filter('upload_dir')
 def prepend_upload_path(filename):
     return url_for('static', filename=os.path.join('upload', filename))
+
+@app.template_filter('translate')
+def find_translation(label):
+    return translate.get_value(label)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=80, debug=True)
