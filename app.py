@@ -1,18 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for
-from flask_debugtoolbar import DebugToolbarExtension
 import os
 import logging
 import config
 import db
-import pprint
 import auth
-#import gif
+import gif
 
 app = Flask(__name__)
-app.debug = True
-app.secret_key = 'development key'
-
-toolbar = DebugToolbarExtension(app)
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 @app.route("/")
 def index():
@@ -54,13 +49,14 @@ def run():
 @auth.requires_auth
 def generate():
     db.add_pair({'test': True})
-    #gif.generate()
+    gif.generate()
     return redirect(url_for('run'))
 
 @app.route('/reset')
 @auth.requires_auth
 def reset():
     db.reset_pairs()
+    gif.remove()
     return redirect(url_for('run'))
 
 @app.template_filter('upload_dir')

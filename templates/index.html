@@ -4,6 +4,18 @@
 
   {% if has_pairs %}
     <p>{{ config.get('message-after') }}</p>
+
+    <div id="overlay">
+      <h3>Pairs are generating...</h3>
+      <img src="{{ 'loading.gif' | upload_dir }}" alt="loading">
+      <img src="{{ url_for('static', filename='dice.gif') }}" alt="dice">
+    </div>
+
+    <script>
+      setTimeout(function() {
+        $('#overlay').fadeOut('fast');
+      }, 10000);
+    </script>
   {% else %}
     <p>{{ config.get('message-before') }}</p>
   {% endif %}
