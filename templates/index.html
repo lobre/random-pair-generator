@@ -56,13 +56,16 @@
   {% else %}
     <p>{{ config.get('message-before') }}</p>
 
+    <h2>{{ 'List of items' | translate }} ({{ items.count() }})</h2>
+
     <ul>
       {% if items.count() > 0 %}
         {% for item in items %}
-        <li>{{ item.name }} 
+        <li> 
           {% if item.photo %}
             <img src="{{ item.photo | upload_dir }}" alt="{{ item.name }}">
           {% endif %}
+          {{ item.name }}
         {% endfor %}
       {% else %}
         <p>{{ 'No item' | translate }}</p>

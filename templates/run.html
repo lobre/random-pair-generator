@@ -1,6 +1,19 @@
 {% extends "layout.html" %}
 {% block body %}
   <h1>{{ 'Run' | translate }}</h1>
+
+  <p>
+    {% if has_pairs %}
+      <p>{{ 'Pairs already generated' | translate }}</p>
+      <a href="{{ url_for('reset') }}" class="btn btn-primary">{{ 'Reset' | translate }}</a>
+    {% else %}
+      <p>{{ 'Pairs not yet generated' | translate }}</p>
+      <a href="{{ url_for('generate') }}" class="btn btn-primary">{{ 'Generate' | translate }}</a>
+    {% endif %}
+  </p>
+
+  <hr>
+
   <h2>{{ 'Configuration' | translate }}</h2>
 
   <form method="post">
@@ -15,9 +28,4 @@
     <button type="submit" class="btn btn-primary">{{ 'Save' | translate }}</button>
   </form>
 
-  {% if has_pairs %}
-    <a href="{{ url_for('reset') }}" class="btn btn-primary">{{ 'Reset' | translate }}</a>
-  {% else %}
-    <a href="{{ url_for('generate') }}" class="btn btn-primary">{{ 'Generate' | translate }}</a>
-  {% endif %}
 {% endblock %}
