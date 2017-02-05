@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 import os
 import random
-import logging
 import config
 import translate
 import db
@@ -9,7 +8,7 @@ import auth
 import gif
 
 app = Flask(__name__)
-app.config['TEMPLATES_AUTO_RELOAD'] = True
+#app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 @app.route("/")
 def index():
@@ -105,4 +104,5 @@ def find_translation(label):
     return translate.get_value(label)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=80, debug=True)
+    #app.run(host='0.0.0.0', port=80, debug=True)
+    app.run(host='0.0.0.0', port=80)

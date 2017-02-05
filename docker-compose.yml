@@ -3,8 +3,11 @@ version: '2'
 services:
   app:
     image: jazzdd/alpine-flask:python3
-    command: -d
+    #command: -d
     container_name: random-pair-generator-app
+    environment:
+      - APP_USER=admin
+      - APP_PASS=pass
     ports:
       - 8000:80
     volumes:

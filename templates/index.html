@@ -3,7 +3,7 @@
   <h1>{{ 'Index' | translate }}</h1>
 
   {% if has_pairs %}
-    <p>{{ config.get('message-after') }}</p>
+    <p>{{ config.get('message-after') | safe }}</p>
 
     <ul>
       {% if pairs|length > 0 %}
@@ -54,7 +54,7 @@
       }, 10000);
     </script>
   {% else %}
-    <p>{{ config.get('message-before') }}</p>
+    <p>{{ config.get('message-before') | safe }}</p>
 
     <h2>{{ 'List of items' | translate }} ({{ items.count() }})</h2>
 
