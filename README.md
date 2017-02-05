@@ -1,6 +1,8 @@
 # random-pair-generator
 Flask app to generate random pairs of items
 
+Don't forget to create the `upload` folder in `static`.
+
 To install pillow on alpine.
 
     apk update
