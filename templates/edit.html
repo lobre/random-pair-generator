@@ -5,10 +5,11 @@
   <ul>
     {% if items.count() > 0 %}
       {% for item in items %}
-      <li>{{ item.name }} 
+      <li> 
         {% if item.photo %}
           <img src="{{ item.photo | upload_dir }}" alt="{{ item.name }}">
         {% endif %}
+        {{ item.name }}
         (<a href="{{ url_for('remove', id=item.get('_id')) }}">{{ 'delete' | translate }}</a>)</li>
       {% endfor %}
     {% else %}
